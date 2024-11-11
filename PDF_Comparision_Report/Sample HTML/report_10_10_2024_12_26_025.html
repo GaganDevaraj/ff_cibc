@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>Audio Comparision Report</title>
+    <link
+      rel='icon'
+      href='https://res.cloudinary.com/dposietlk/image/upload/v1722593659/favicon_itzjrc.png'
+      type='image/png'
+    />
+    <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'>
+    <style>
+      button {
+        text-decoration: none;
+        border: none;
+      }
+      body {
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+          sans-serif;
+        background-image: repeating-radial-gradient(
+          circle,
+          rgb(160, 196, 212) 0%,
+          rgb(211, 211, 211) 70%,
+          rgb(160, 196, 212) 100%
+        );
+        margin: 0;
+      }
+      .audio-container {
+        display: flex;
+        justify-content: space-around;
+        font-size: 20px;
+        padding-top: 10px;
+      }
+      .content {
+        color: rgb(0, 4, 255);
+        padding: 10px;
+        font-weight: bolder;
+        font-size: medium;
+      }
+      .contentPdf {
+        width: 100%;
+        border-radius: 5px;        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .listAudio.content::-webkit-scrollbar {
+        display: none;
+      }
+      .listAudio {
+        height: 200px;
+      }
+      .record {
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+          sans-serif;
+        padding: 5px 10px;
+        font-size: 15px;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        box-shadow: 1px 1px 20px white;
+        font-size: 20px;
+      }
+      .record:hover {
+        box-shadow: 1px 1px 20px white;
+        font-size: 20px;
+      }
+      .topic {
+        width: 300px;
+        margin: auto;
+        text-align: center;
+        background-color: aliceblue;
+        border-radius: 10px;
+        border: 1px rgb(0, 24, 88) solid;
+      }
+      ol {
+        list-style-type: none;
+        padding: 0;
+      }
+      .audio-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 25px;
+      }
+      .record-list {
+        width: 32%;
+        font-size: small;
+      }
+      .record-item {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 5px 0;
+        padding: 5px;
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.7);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+      .record-item button {
+        margin-left: 10px;
+        padding: 5px 10px;
+        font-size: 14px;
+        border-radius: 3px;
+        background-color: #4caf50;
+        color: white;
+        cursor: pointer;
+      }
+      .record-item button:hover {
+        background-color: #45a049;
+      }
+      .footer {
+        width: 100%;
+        bottom: 0px;
+        left: 0px;
+        padding-top: 5px;
+        background-color: rgba(255, 255, 255, 0.8);
+        display: flex;
+        justify-content: center;
+      }
+      .footer img {
+        margin: auto;
+      }
+      .expandedcontent {
+            display: none;
+            text-align: center;
+            padding: 10px;
+            background-color: #fafafa;
+            border-top: 1px solid #ccc;
+        }
+    </style>
+  </head>
+  <body>
+    <div
+      style='
+        text-align: center;
+        background-image: linear-gradient(
+          to right,
+          rgb(39, 65, 180) 0%,
+          rgb(136, 141, 190) 20%,
+          rgb(26, 39, 153) 50%,
+          rgb(93, 85, 185) 100%
+        );
+        color: white;
+        padding: 5px;
+        display: flex;
+        font-size: 20px;
+      '
+    >
+      <img
+        src='https://res.cloudinary.com/dposietlk/image/upload/v1722593660/fireflink-white-logo_yi0ltk.png'
+        alt='Fireflink Logo'
+        height='25px'
+      />
+      <div style='width: 80%'>HTML Report For Audio Comparison</div>
+    </div>
+     
+    <div class='audio-container'>
+      <div class='topic'>Golden Audio<div class='content'>BEFORE_TRANS</div></div>
+      <div class='topic'>Actual Audio<div class='content'>AFTER_TRANS</div></div>
+    </div>
+    
+    <br />
+    <div class='contentPdf'>
+      <iframe
+        src='before_trans.pdf'
+        frameborder='0'
+        width='100%'
+        height='200px'
+      ></iframe>
+      <div style='padding: 5px;'></div>
+      <iframe
+        src='after_trans.pdf'
+        frameborder='0'
+        width='100%'
+        height='200px'
+      ></iframe>
+    </div>
+    <br />
+    <div class='audio-controls'>
+      <button class='record' style='background-color: red'>
+        There are 7 Differences between Audios
+      </button>
+    </div>
+    <div class='audio-container'>
+      <div>
+        <audio id='expectedAudio' controls>
+          <source src='before_trans.wav' type='audio/wav' />
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+      <div>
+        <audio id='actualAudio' controls>
+          <source src='after_trans.wav' type='audio/wav' />
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    </div>
+    <div class='audio-container'>
+      <button class='record' style='background-color: rgb(17, 0, 255)'>
+        Differences (2)
+      </button>
+      <button class='record' style='background-color: rgb(17, 0, 255)'>
+        Deleted (2) 
+      </button>
+      <button class='record' style='background-color: rgb(17, 0, 255)'>
+        Added (3)
+      </button>
+    </div>
+    <div class='audio-container listAudio'>
+      
+      <div class='record-list'>
+        <ol id='modified'>
+          <li class='record-item'>
+            <div>1)</div>
+            <button onclick='{playExTime(53.0)}'>Exp at 53.0s to 55.0s</button>
+            <button onclick='{playAcTime(56.0)}'>Act at 56.0s to 58.0s</button>
+            <div onclick='{pause()}' style='margin-left: 15px;'><i class='material-icons'>pause</i></div>
+          </li>
+          <div class='expandedcontent'>
+            Actual ==> will been<br>
+            Golden ==> shall be
+        </div>  
+          <li class='record-item'>
+            <div>2)</div>
+            <button onclick='{playExTime(162.0)}'>Exp at 162.0s to 164.0s</button>
+            <button onclick='{playAcTime(166.0)}'>Act at 166.0s to 167.0s</button>
+            <div onclick='{pause()}' style='margin-left: 15px;'><i class='material-icons'>pause</i></div>
+          </li>
+          <div class='expandedcontent'>
+            Actual ==> confirm<br>
+            Golden ==> am confirmed
+        </div>  
+        </ol>
+      </div>
+      <div class='record-list'>
+        <ol id='deleted'>
+          <li class='record-item'>
+            <div>1) (Start=26.0s, End=29.0s)</div>
+            <button onclick='{playExTime(26.0)}'>Play</button>
+            <div onclick='{pause()}' style='margin-left: 15px;'><i class='material-icons'>pause</i></div>
+          </li>
+          <div class='expandedcontent'>
+            Actual ==> edit Account Number Account Number
+        </div>
+          <li class='record-item'>
+            <div>2) (Start=140.0s, End=146.0s)</div>
+            <button onclick='{playExTime(140.0)}'>Play</button>
+            <div onclick='{pause()}' style='margin-left: 15px;'><i class='material-icons'>pause</i></div>
+          </li>
+          <div class='expandedcontent'>
+            Actual ==> The Account Holder reaches the age of majority on
+        </div>
+        </ol>
+      </div>
+      <div class='record-list'>
+        <ol id='added'>
+          <li class='record-item'>
+            <div>1) (Start=14.0s, End=17.0s)</div>
+            <button onclick='{playAcTime(14.0)}'>Play</button>
+            <div onclick='{pause()}' style='margin-left: 15px;'><i class='material-icons'>pause</i></div>
+          </li>
+          <div class='expandedcontent'>
+            Golden ==> heading level 2
+        </div>
+          <li class='record-item'>
+            <div>2) (Start=24.0s, End=29.0s)</div>
+            <button onclick='{playAcTime(24.0)}'>Play</button>
+            <div onclick='{pause()}' style='margin-left: 15px;'><i class='material-icons'>pause</i></div>
+          </li>
+          <div class='expandedcontent'>
+            Golden ==> Name Name edit Account Number Account Number
+        </div>
+          <li class='record-item'>
+            <div>3) (Start=139.0s, End=145.0s)</div>
+            <button onclick='{playAcTime(139.0)}'>Play</button>
+            <div onclick='{pause()}' style='margin-left: 15px;'><i class='material-icons'>pause</i></div>
+          </li>
+          <div class='expandedcontent'>
+            Golden ==> The Account Holder reaches the age of majority on
+        </div>
+        </ol>
+      </div>
+
+    </div>
+    <!-- <div class='footer'>
+      <img
+        src='https://res.cloudinary.com/dposietlk/image/upload/v1722593660/Acoe_jlouhm.png'
+        alt='Designed and Developed by ACOE Team'
+        height='40px'
+        width='350px'
+      />
+    </div> -->
+    <script>
+      function pause() {
+        const expectedAudio = document.getElementById('expectedAudio');
+        const actualAudio = document.getElementById('actualAudio');
+        actualAudio.pause();
+        expectedAudio.pause();
+      }
+      function playExTime(sec) {
+        const expectedAudio = document.getElementById('expectedAudio');
+        const actualAudio = document.getElementById('actualAudio');
+        expectedAudio.currentTime = parseFloat(sec);
+        actualAudio.pause();
+        expectedAudio.play();
+      }
+      function playAcTime(sec) {
+        const actualAudio = document.getElementById('actualAudio');
+        const expectedAudio = document.getElementById('expectedAudio');
+        actualAudio.currentTime = parseFloat(sec);
+        expectedAudio.pause();
+        actualAudio.play();
+      }
+const expandables = document.querySelectorAll('.record-item');
+
+expandables.forEach(expandable => {
+    expandable.addEventListener('click', function() {
+        let nextElement = this.nextElementSibling;
+
+        if (nextElement && nextElement.classList.contains('expandedcontent')) {
+            if (nextElement.style.display === 'block') {
+                nextElement.style.display = 'none';
+            } else {
+                nextElement.style.display = 'block';
+            }
+        }
+    });
+});
+
+</script>
+  </body>
+</html>
+

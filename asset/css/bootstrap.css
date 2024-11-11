@@ -4905,6 +4905,11 @@ fieldset:disabled .btn {
 	padding: 1rem 1rem
 }
 
+.card-body-ff {
+	flex: 1 1 auto;
+	/* padding: 1rem 1rem */
+}
+
 .card-title {
 	margin-bottom: .5rem
 }
@@ -5107,6 +5112,11 @@ fieldset:disabled .btn {
 .accordion-item {
 	background-color: #fff;
 	border: 1px solid rgba(0, 0, 0, .125)
+}
+
+.accordion-item-ff {
+	background-color: #fff;
+	border-bottom: 1px solid rgba(0, 0, 0, .125)
 }
 
 .accordion-item:first-of-type {

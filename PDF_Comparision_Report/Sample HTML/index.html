@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <title>Audio Comparision Report</title>
+  <link rel='icon' href='https://res.cloudinary.com/dposietlk/image/upload/v1722593659/favicon_itzjrc.png'
+    type='image/png' />
+  <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'>
+  <link rel="stylesheet" href="../../asset/css/bootstrap.css">
+  <link rel="stylesheet" href="../../asset/css/style.css">
+  <style>
+    button {
+      text-decoration: none;
+      border: none;
+    }
+
+    .audio-container {
+      display: flex;
+      justify-content: space-around;
+      font-size: 20px;
+      padding-top: 10px;
+    }
+
+    .content {
+      color: rgb(0, 4, 255);
+      padding: 10px;
+      font-weight: bolder;
+      font-size: medium;
+    }
+
+    .contentPdf {
+      width: 100%;
+      border-radius: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .listAudio.content::-webkit-scrollbar {
+      display: none;
+    }
+
+    .listAudio {
+      height: 200px;
+    }
+
+    .record {
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+        sans-serif;
+      padding: 5px 10px;
+      font-size: 15px;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      box-shadow: 1px 1px 20px white;
+      font-size: 20px;
+    }
+
+    .record:hover {
+      box-shadow: 1px 1px 20px white;
+      font-size: 20px;
+    }
+
+    .topic {
+      width: 300px;
+      margin: auto;
+      text-align: center;
+      background-color: aliceblue;
+      border-radius: 10px;
+      border: 1px rgb(0, 24, 88) solid;
+    }
+
+    ol {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .audio-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 25px;
+    }
+
+    .record-list {
+      width: 30%;
+      font-size: small;
+    }
+
+    .record-item {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 5px 0;
+      padding: 5px;
+      border-radius: 5px;
+      background-color: rgba(255, 255, 255, 0.7);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .record-item button {
+      margin-left: 10px;
+      padding: 5px 10px;
+      font-size: 14px;
+      border-radius: 3px;
+      background-color: #4caf50;
+      color: white;
+      cursor: pointer;
+    }
+
+    .record-item button:hover {
+      background-color: #45a049;
+    }
+
+    .footer img {
+      margin: auto;
+    }
+
+    .expandedcontent {
+      display: none;
+      text-align: center;
+      padding: 10px;
+      background-color: #fafafa;
+      border-top: 1px solid #ccc;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="navbar">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container d-flex justify-content-between">
+        <div class="p-3">
+          <img src='https://www.testyantraglobal.com/images/logo.svg' alt='Test Yantra Global Logo' height='40px'>
+        </div>
+        <div class="form-inline my-2 my-lg-0 text-ff-orange text-left">
+          <img src='https://www.fireflink.com/static/media/fireflink.0d427889.svg' alt='Fire Flink Logo' height='40px'>
+          <h6 class="pt-2"> PDF Accessibility Report</h6>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <div class="mx-5 my-4">
+    <h5 class="card-title mb-3">Standard: <span class="card-subtitle mb-2 text-muted">WCAG2AA</span></h5>
+  </div>
+
+  <div class="mx-5">
+    <div class="my-4">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title mb-3">Golden Audio: <span class="card-subtitle mb-2 text-muted">BEFORE_TRANS</span></h5>
+              <iframe src='before_trans.pdf' frameborder='0' width='100%' height='500px'></iframe>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title mb-3">Actual Audio: <span class="card-subtitle mb-2 text-muted">AFTER_TRANS</span></h5>
+              <iframe src='after_trans.pdf' frameborder='0' width='100%' height='500px'></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="my-5 w-100 d-flex gap-5 justify-content-around">
+        <audio class="w-50 " id='expectedAudio' controls>
+          <source src='before_trans.wav' type='audio/wav' />
+          Your browser does not support the audio element.
+        </audio>
+        <audio class="w-50" id='actualAudio' controls>
+          <source src='after_trans.wav' type='audio/wav' />
+          Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <div class="my-4">
+      <div class="alert alert-primary text-center shadow-sm rounded" role="alert">
+        <h6>There are 7 Differences between Audios</h6>
+      </div>
+    </div>
+    
+    <div class="my-5">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card shadow-sm">
+            <div class="card-header text-center bg-success text-white">
+              <h5 class="card-title">Added <span>(3)</span></h5>
+            </div>
+            <div class="card-body-ff">
+              <div class="accordion" id="addedAudioFile">
+                <div class="accordion-item-ff">
+                  <div class="accordion-header" id="headingOne">
+                    <div class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#addedCollapseOne"
+                      aria-expanded="true" aria-controls="addedCollapseOne">
+                      <div class="w-100 d-flex justify-content-around">
+                        <div class="py-2 w-50">
+                          <p class="m-0"> 1. (Start=14.0s, End=17.0s)</p>
+                        </div>
+                        <div class="ps-5 d-grid gap-2 d-md-block w-50">
+                          <button class="btn btn-outline-success px-4" onclick='{playAcTime(14.0)}'>Play</button>
+                          <button class="btn btn-outline-warning px-4" onclick='{pause()}'>Pause</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="addedCollapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                    data-bs-parent="#addedAudioFile">
+                    <div class="accordion-body">
+                      <p class="m-0">Golden ==> heading level 2</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item-ff">
+                  <h2 class="accordion-header" id="headingTwo">
+                    <div class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#addedCollapseTwo"
+                      aria-expanded="false" aria-controls="addedCollapseTwo">
+                      <div class="w-100 d-flex justify-content-around">
+                        <div class="py-2 w-50">
+                          <p class="m-0"> 2. (Start=14.0s, End=17.0s)</p>
+                        </div>
+                        <div class="ps-5 d-grid gap-2 d-md-block w-50">
+                          <button class="btn btn-outline-success px-4" onclick='{playAcTime(14.0)}'>Play</button>
+                          <button class="btn btn-outline-warning px-4" onclick='{pause()}'>Pause</button>
+                        </div>
+                      </div>
+                    </div>
+                  </h2>
+                  <div id="addedCollapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                    data-bs-parent="#addedAudioFile">
+                    <div class="accordion-body">
+                      <p class="m-0">Golden ==> heading level 2</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item-ff">
+                  <h2 class="accordion-header" id="headingThree">
+                    <div class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#addedCollapseThree"
+                      aria-expanded="false" aria-controls="addedCollapseThree">
+                      <div class="w-100 d-flex justify-content-around">
+                        <div class="py-2 w-50">
+                          <p class="m-0"> 3. (Start=14.0s, End=17.0s)</p>
+                        </div>
+                        <div class="ps-5 d-grid gap-2 d-md-block w-50">
+                          <button class="btn btn-outline-success px-4" onclick='{playAcTime(14.0)}'>Play</button>
+                          <button class="btn btn-outline-warning px-4" onclick='{pause()}'>Pause</button>
+                        </div>
+                      </div>
+                    </div>
+                  </h2>
+                  <div id="addedCollapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                    data-bs-parent="#addedAudioFile">
+                    <div class="accordion-body">
+                      <p class="m-0">Golden ==> heading level 2</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card shadow-sm">
+            <div class="card-header text-center bg-danger text-white">
+              <h5 class="card-title">Deleted <span>(3)</span></h5>
+            </div>
+            <div class="card-body-ff">
+              <div class="accordion" id="deletedAudioFile">
+                <div class="accordion-item-ff">
+                  <div class="accordion-header" id="headingOne">
+                    <div class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#deletedCollapseOne"
+                      aria-expanded="true" aria-controls="deletedCollapseOne">
+                      <div class="w-100 d-flex justify-content-around">
+                        <div class="py-2 w-50">
+                          <p class="m-0"> 1. (Start=14.0s, End=17.0s)</p>
+                        </div>
+                        <div class="ps-5 d-grid gap-2 d-md-block w-50">
+                          <button class="btn btn-outline-success px-4" onclick='{playAcTime(14.0)}'>Play</button>
+                          <button class="btn btn-outline-warning px-4" onclick='{pause()}'>Pause</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="deletedCollapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                    data-bs-parent="#deletedAudioFile">
+                    <div class="accordion-body">
+                      <p class="m-0">Golden ==> heading level 2</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item-ff">
+                  <h2 class="accordion-header" id="headingTwo">
+                    <div class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#deletedCollapseTwo"
+                      aria-expanded="false" aria-controls="deletedCollapseTwo">
+                      <div class="w-100 d-flex justify-content-around">
+                        <div class="py-2 w-50">
+                          <p class="m-0"> 2. (Start=14.0s, End=17.0s)</p>
+                        </div>
+                        <div class="ps-5 d-grid gap-2 d-md-block w-50">
+                          <button class="btn btn-outline-success px-4" onclick='{playAcTime(14.0)}'>Play</button>
+                          <button class="btn btn-outline-warning px-4" onclick='{pause()}'>Pause</button>
+                        </div>
+                      </div>
+                    </div>
+                  </h2>
+                  <div id="deletedCollapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                    data-bs-parent="#deletedAudioFile">
+                    <div class="accordion-body">
+                      <p class="m-0">Golden ==> heading level 2</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item-ff">
+                  <h2 class="accordion-header" id="headingThree">
+                    <div class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#deletedCollapseThree"
+                      aria-expanded="false" aria-controls="deletedCollapseThree">
+                      <div class="w-100 d-flex justify-content-around">
+                        <div class="py-2 w-50">
+                          <p class="m-0"> 3. (Start=14.0s, End=17.0s)</p>
+                        </div>
+                        <div class="ps-5 d-grid gap-2 d-md-block w-50">
+                          <button class="btn btn-outline-success px-4" onclick='{playAcTime(14.0)}'>Play</button>
+                          <button class="btn btn-outline-warning px-4" onclick='{pause()}'>Pause</button>
+                        </div>
+                      </div>
+                    </div>
+                  </h2>
+                  <div id="deletedCollapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                    data-bs-parent="#deletedAudioFile">
+                    <div class="accordion-body">
+                      <p class="m-0">Golden ==> heading level 2</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        <div class="col-lg-4">
+          <div class="card shadow-sm">
+            <div class="card-header text-center bg-warning text-white">
+              <h5 class="card-title">Differences <span>(2)</span></h5>
+            </div>
+            <div class="card-body-ff">
+              <div class="accordion" id="differencesAudioFile">
+                <div class="accordion-item-ff">
+                  <div class="accordion-header" id="headingOne">
+                    <div class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#differencesCollapseOne"
+                      aria-expanded="true" aria-controls="differencesCollapseOne">
+                      <div class="w-100 d-flex justify-content-around">
+                        <div class="py-2 w-50">
+                          <p class="m-0"> 1. (Start=14.0s, End=17.0s)</p>
+                        </div>
+                        <div class="ps-5 d-grid gap-2 d-md-block w-50">
+                          <button class="btn btn-outline-success px-4" onclick='{playAcTime(14.0)}'>Play</button>
+                          <button class="btn btn-outline-warning px-4" onclick='{pause()}'>Pause</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="differencesCollapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                    data-bs-parent="#differencesAudioFile">
+                    <div class="accordion-body">
+                      <p class="m-0">Golden ==> heading level 2</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item-ff">
+                  <h2 class="accordion-header" id="headingTwo">
+                    <div class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#differencesCollapseTwo"
+                      aria-expanded="false" aria-controls="differencesCollapseTwo">
+                      <div class="w-100 d-flex justify-content-around">
+                        <div class="py-2 w-50">
+                          <p class="m-0"> 2. (Start=14.0s, End=17.0s)</p>
+                        </div>
+                        <div class="ps-5 d-grid gap-2 d-md-block w-50">
+                          <button class="btn btn-outline-success px-4" onclick='{playAcTime(14.0)}'>Play</button>
+                          <button class="btn btn-outline-warning px-4" onclick='{pause()}'>Pause</button>
+                        </div>
+                      </div>
+                    </div>
+                  </h2>
+                  <div id="differencesCollapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                    data-bs-parent="#differencesAudioFile">
+                    <div class="accordion-body">
+                      <p class="m-0">Golden ==> heading level 2</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item-ff">
+                  <h2 class="accordion-header" id="headingThree">
+                    <div class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#differencesCollapseThree"
+                      aria-expanded="false" aria-controls="differencesCollapseThree">
+                      <div class="w-100 d-flex justify-content-around">
+                        <div class="py-2 w-50">
+                          <p class="m-0"> 3. (Start=14.0s, End=17.0s)</p>
+                        </div>
+                        <div class="ps-5 d-grid gap-2 d-md-block w-50">
+                          <button class="btn btn-outline-success px-4" onclick='{playAcTime(14.0)}'>Play</button>
+                          <button class="btn btn-outline-warning px-4" onclick='{pause()}'>Pause</button>
+                        </div>
+                      </div>
+                    </div>
+                  </h2>
+                  <div id="differencesCollapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                    data-bs-parent="#differencesAudioFile">
+                    <div class="accordion-body">
+                      <p class="m-0">Golden ==> heading level 2</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="text-center text-lg-start bg-body-tertiary text-muted border-top mt-5">
+
+    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+      © 2024 Copyright:
+      <a class="text-reset fw-bold" href="https://fireflink.com/">www.fireflink.com</a>
+    </div>
+    <!-- Copyright -->
+  </footer>
+  <!-- Footer -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+  <script>
+    function pause() {
+      const expectedAudio = document.getElementById('expectedAudio');
+      const actualAudio = document.getElementById('actualAudio');
+      actualAudio.pause();
+      expectedAudio.pause();
+    }
+    function playExTime(sec) {
+      const expectedAudio = document.getElementById('expectedAudio');
+      const actualAudio = document.getElementById('actualAudio');
+      expectedAudio.currentTime = parseFloat(sec);
+      actualAudio.pause();
+      expectedAudio.play();
+    }
+    function playAcTime(sec) {
+      const actualAudio = document.getElementById('actualAudio');
+      const expectedAudio = document.getElementById('expectedAudio');
+      actualAudio.currentTime = parseFloat(sec);
+      expectedAudio.pause();
+      actualAudio.play();
+    }
+    const expandables = document.querySelectorAll('.record-item');
+
+    expandables.forEach(expandable => {
+      expandable.addEventListener('click', function () {
+        let nextElement = this.nextElementSibling;
+
+        if (nextElement && nextElement.classList.contains('expandedcontent')) {
+          if (nextElement.style.display === 'block') {
+            nextElement.style.display = 'none';
+          } else {
+            nextElement.style.display = 'block';
+          }
+        }
+      });
+    });
+
+  </script>
+</body>
+
+</html>
